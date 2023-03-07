@@ -6,21 +6,21 @@ const Product = (props) => {
 
   const addlike = (e) => {
     e.preventDefault();
-    setProduct({...product, like: product.like + 1});
+    setProduct({ ...product, like: product.like + 1 });
   };
 
   const addItem = (e) => {
     e.preventDefault();
     props.buyFunction(product);
-    setProduct({...product, quantity: product.quantity - 1});
+    setProduct({ ...product, quantity: product.quantity - 1 });
   };
 
   return (
-    <Card 
+    <Card
 
-    style={{ width: "18rem" }}
-    border="secondary"
-    className={product.like > 5 ? "bestProduct" : ""}
+      style={{ width: "18rem" }}
+      border="secondary"
+      className={product.like > 5 ? "bestProduct" : ""}
     >
       <Card.Header>
         <Card.Img
@@ -31,9 +31,9 @@ const Product = (props) => {
         />
       </Card.Header>
       <Card.Body>
-      <Card.Title >
-        <Link to={`/products/${product.id}`}>
-        {product.name}</Link></Card.Title>
+        <Card.Title >
+          <Link to={`/products/${product.id}`}>
+            {product.name}</Link></Card.Title>
         <Card.Text>Quantity: {product.quantity} </Card.Text>
         <Card.Text>Price : {product.price} $ </Card.Text>
         <Card.Text>Like : {product.like}</Card.Text>
@@ -42,6 +42,7 @@ const Product = (props) => {
             <Button variant="primary" onClick={addlike}>
               Like
             </Button>
+
           </Col>
           <Col md={6}>
             <Button
@@ -52,6 +53,21 @@ const Product = (props) => {
               Buy
             </Button>
           </Col>
+          <Col md={6}><br></br>
+          <Button variant="success">
+              <Link
+                to={`/products/update/${product.id}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Update Product{" "}
+              </Link>
+            </Button>
+            </Col>
+            <Col md={6}><br></br>
+            <Button variant="danger" onClick={() =>props.deleteProd(product.id)}>
+              Delete Product
+              </Button>
+            </Col>
         </Row>
       </Card.Body>
     </Card>

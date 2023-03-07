@@ -2,15 +2,16 @@ import Product from './Product';
 import { Container ,Row ,Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import {getallProducts} from '../services/api'
+import {deleteProduct,getallProducts} from '../services/api'
  
 function ProductsFunc () {
   const [show,setShow] =useState(false);
   const [visible,setVisible] =useState(false);
   const [products, setProducts] = useState([]);
+
+
  //get product
  useEffect(() => {
-
   getProducts();
   }, [])
   const getProducts = async () => {
@@ -18,6 +19,8 @@ function ProductsFunc () {
     console.log(response);
     setProducts(response.data);
   }
+/// fin appel
+
 
   useEffect(()=> //hooks nous permet d'afficher de modifier le state on veut changer le state visisble a true w apres 3s on veut affecter true
   {
@@ -38,6 +41,17 @@ function ProductsFunc () {
           },1000
         )
        };
+
+       const deleteProd = async (id) => {
+        const result = window.confirm("Are you sure you want to delete?");
+      if (result) {
+        await deleteProduct(id);
+        getProducts(); }
+      }
+      
+  
+      
+
     return ( 
 
         <Container style={{ marginTop: "30px" }}>
@@ -56,7 +70,7 @@ function ProductsFunc () {
         <Row>
           {products.map((product) => (
             <Col md={4}>
-              <Product product={product} buyFunction={buy}></Product>
+              <Product product={product} buyFunction={buy} deleteProd={deleteProd}></Product>
             </Col>
           ))}
         </Row>
